@@ -26,13 +26,21 @@ def main():
     asteroidField = AsteroidField()
     player = Player(x, y)
 
-    while True:
+    continue_game = True
+    while continue_game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
         screen.fill((0, 0, 0))
         dt = clock.tick(60) / 1000
+        
         updatable.update(dt)
+
+        for asteroid in asteroids:
+            if asteroid.collides_with(player):
+                print("Game over!")
+                continue_game = False
+        
         for draw in drawable:
             draw.draw(screen)
         pygame.display.flip()
